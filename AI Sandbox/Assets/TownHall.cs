@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TownHall : BuildingScript {
+public class TownHall : MonoBehaviour {
 
 	public bool selected = false;
 	public int Health = 1500;
