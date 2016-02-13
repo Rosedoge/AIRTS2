@@ -51,6 +51,7 @@
      <Compile Include="Assets\Easy Menu - System\_Scripts\C# version (Beta)\MenuWindow.cs" />
      <Compile Include="Assets\Easy Menu - System\_Scripts\C# version (Beta)\OpenByButton.cs" />
      <Compile Include="Assets\Easy Menu - System\_Scripts\C# version (Beta)\OpenByRaycastedTrigger.cs" />
+     <Compile Include="Assets\Enemy Scripts\EnemyController.cs" />
      <Compile Include="Assets\ExampleClass.cs" />
      <Compile Include="Assets\MineScript.cs" />
      <Compile Include="Assets\PlayerScript.cs" />

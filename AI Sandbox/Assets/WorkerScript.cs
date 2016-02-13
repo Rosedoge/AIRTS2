@@ -39,8 +39,12 @@ public class WorkerScript : MonoBehaviour {
 	void Start () {
 		//gameObject.GetComponent<Halo
 		Home = GameObject.FindGameObjectWithTag("TownHall");
-		halo = (Behaviour)GetComponent("Halo");
-		halo.enabled = false;
+        try
+        {
+            halo = (Behaviour)GetComponent("Halo");
+            halo.enabled = false;
+        }
+        catch { }
 		CurTask = Task.None;
 	}
 
@@ -139,10 +143,14 @@ public class WorkerScript : MonoBehaviour {
 		}
 
 
-		if (selected)
-			halo.enabled = true;
-		else
-			halo.enabled = false;
+        try
+        {
+            if (selected)
+                halo.enabled = true;
+            else
+                halo.enabled = false;
+        }
+        catch { }
 //		if (Input.GetMouseButtonDown(0))
 //		{
 //			MouseClick ();
