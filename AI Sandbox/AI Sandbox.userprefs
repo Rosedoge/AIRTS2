@@ -1,13 +1,17 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\TownHall.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\PlayerScript.cs">
     <Files>
       <File FileName="Assets\TownHall.cs" Line="15" Column="17" />
-      <File FileName="Assets\Easy Menu - System\_Scripts\C# version (Beta)\MenuElements.cs" Line="1" Column="1" />
+      <File FileName="Assets\WorkerScript.cs" Line="14" Column="27" />
+      <File FileName="Assets\Enemy Scripts\EnemyController.cs" Line="28" Column="6" />
+      <File FileName="Assets\PlayerScript.cs" Line="35" Column="45" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches>
+    <Watch file="Assets\PlayerScript.cs" line="66" offsetX="375" offsetY="1040" expression="hit.collider" liveUpdate="False" />
+  </MonoDevelop.Ide.DebuggingService.PinnedWatches>
 </Properties>

@@ -12,6 +12,7 @@ public class PlayerScript : MonoBehaviour {
 
 	GameObject selected;
 	RaycastHit hit;
+	int layerMask;
 
 
 	// Use this for initialization
@@ -19,12 +20,19 @@ public class PlayerScript : MonoBehaviour {
 		selected = new GameObject ();
 		selected.AddComponent <WorkerScript>();
 		//selected = null;
+		// Bit shift the index of the layer (8) to get a bit mask
+		layerMask = 1 << 8;
+
+		// This would cast rays only against colliders in layer 8.
+		// But instead we want to collide against everything except layer 8. The ~ operator does this, it inverts a bitmask.
+		layerMask = ~layerMask;
 	}
 
 	void MouseClick(){
 		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 
 		if (Physics.Raycast (ray, out hit)) {
+			Debug.Log (hit.collider.gameObject.name);
 			if (selected == null) {
 				if (hit.collider.gameObject.GetComponent<WorkerScript> ()) {
 					selected = hit.collider.gameObject;
@@ -64,13 +72,16 @@ public class PlayerScript : MonoBehaviour {
 					selected.gameObject.GetComponent<TankScript> ().selected = false;
 				selected = null;
 
-			}else if (hit.collider.gameObject.name == "Mine") {
+			} else if (hit.collider.gameObject.name == "Mine") {
 				if (selected != null && selected.gameObject.GetComponent<WorkerScript> ()) {
 					Debug.Log ("Get to work");
-					selected.gameObject.GetComponent<WorkerScript> ().SetWork(hit.collider.gameObject);
+					selected.gameObject.GetComponent<WorkerScript> ().SetWork (hit.collider.gameObject);
 				}
 				selected.gameObject.GetComponent<WorkerScript> ().selected = false;
 				selected = null;
+
+			} else {
+				Debug.Log(hit.collider.gameObject.name);
 
 			}
 		}

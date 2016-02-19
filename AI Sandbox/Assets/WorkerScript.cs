@@ -4,15 +4,15 @@ using System.Collections;
 public class WorkerScript : MonoBehaviour {
 	Behaviour halo;// = (Behaviour)GetComponent("Halo");
 	public bool selected = false;
-	public enum Task {None,Working,Fighting,Guard};
-	Task CurTask;
+	public enum Task {None,Working,Fighting,Guard,Scared};
+	public Task CurTask;
 
 	//Work Related
 	GameObject TargetObject;
 	GameObject Home;
 	float Lasttime;
 	int CarryingResource = 0;
-	public bool AtResource = false;
+	public bool AtResource = false, Feared = false;
 	public bool AtDrop = false;
 
 
@@ -135,7 +135,11 @@ public class WorkerScript : MonoBehaviour {
 	}
 	void Update()
 	{
-
+		if ((CurTask == Task.Scared) && !Feared) {
+			Feared = true;
+			this.gameObject.GetComponent<NavMeshAgent> ().destination = Home.gameObject.transform.position;
+			Debug.Log ("Run away!");
+		}
 		if (CurTask == Task.Working) {
 			Work ();
 			//Debug.Log ("Starting to Work!");
@@ -143,7 +147,7 @@ public class WorkerScript : MonoBehaviour {
 		}
 
 
-        try
+        try //omg ty
         {
             if (selected)
                 halo.enabled = true;

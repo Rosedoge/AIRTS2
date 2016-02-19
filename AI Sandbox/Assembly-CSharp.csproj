@@ -58,6 +58,7 @@
      <Compile Include="Assets\TankScript.cs" />
      <Compile Include="Assets\TownHall.cs" />
      <Compile Include="Assets\WorkerScript.cs" />
+     <None Include="Assets\PBS Materials Variety Pack\readme.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
