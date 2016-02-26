@@ -55,6 +55,7 @@
      <Compile Include="Assets\ExampleClass.cs" />
      <Compile Include="Assets\MineScript.cs" />
      <Compile Include="Assets\PlayerScript.cs" />
+     <Compile Include="Assets\SoldierScript.cs" />
      <Compile Include="Assets\TankScript.cs" />
      <Compile Include="Assets\TownHall.cs" />
      <Compile Include="Assets\WorkerScript.cs" />

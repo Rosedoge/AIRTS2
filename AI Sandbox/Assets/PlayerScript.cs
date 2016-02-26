@@ -38,17 +38,17 @@ public class PlayerScript : MonoBehaviour {
 					selected = hit.collider.gameObject;
 					selected.gameObject.GetComponent<WorkerScript> ().selected = true;
 				}
-				if (hit.collider.gameObject.GetComponent<TankScript> ()) {
+				if (hit.collider.gameObject.GetComponent<SoldierScript> ()) {
 					selected = hit.collider.gameObject;
-					selected.gameObject.GetComponent<TankScript> ().selected = true;
+					selected.gameObject.GetComponent<SoldierScript> ().selected = true;
 				}
 			} else {
 				//selected.gameObject.GetComponent<WorkerScript> ().
 				if (selected.gameObject.GetComponent<WorkerScript> ()) {
 					selected.gameObject.GetComponent<WorkerScript> ().Move (hit);
-				}else if (selected.gameObject.GetComponent<TankScript> ()) {
+				}else if (selected.gameObject.GetComponent<SoldierScript> ()) {
 					//selected = hit.collider.gameObject;
-					selected.gameObject.GetComponent<TankScript> ().Move (hit);
+					selected.gameObject.GetComponent<SoldierScript> ().Move (hit);
 				}
 
 
@@ -68,8 +68,8 @@ public class PlayerScript : MonoBehaviour {
 			if (hit.collider.gameObject.name == "Terrain") {
 				if (selected != null && selected.gameObject.GetComponent<WorkerScript> ())
 					selected.gameObject.GetComponent<WorkerScript> ().selected = false;
-				if (selected != null && selected.gameObject.GetComponent<TankScript> ())
-					selected.gameObject.GetComponent<TankScript> ().selected = false;
+				if (selected != null && selected.gameObject.GetComponent<SoldierScript> ())
+					selected.gameObject.GetComponent<SoldierScript> ().selected = false;
 				selected = null;
 
 			} else if (hit.collider.gameObject.name == "Mine") {
@@ -79,7 +79,12 @@ public class PlayerScript : MonoBehaviour {
 				}
 				selected.gameObject.GetComponent<WorkerScript> ().selected = false;
 				selected = null;
-
+			} else if (hit.collider.gameObject.tag == "Enemy") {
+				if (selected != null && selected.gameObject.GetComponent<SoldierScript> ()) {
+					selected.gameObject.GetComponent<SoldierScript> ().selected = false;
+					selected.gameObject.GetComponent<SoldierScript> ().CurTask = SoldierScript.Task.Fighting;
+					selected.gameObject.GetComponent<SoldierScript> ().Attack (hit.collider.gameObject);
+				}
 			} else {
 				Debug.Log(hit.collider.gameObject.name);
 
