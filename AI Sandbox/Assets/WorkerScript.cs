@@ -49,7 +49,11 @@ public class WorkerScript : MonoBehaviour {
 	}
 
 	public void Move(RaycastHit hit){
-		this.gameObject.GetComponent<NavMeshAgent> ().destination = hit.point;
+        try
+        {
+            this.gameObject.GetComponent<NavMeshAgent>().destination = hit.point;
+        }
+        catch { }
 		Debug.Log ("Stop Working");
 		CurTask = Task.None;
 	}

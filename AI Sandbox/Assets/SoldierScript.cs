@@ -49,10 +49,15 @@ public class SoldierScript : MonoBehaviour {
 	void Update () {
 		
 		if(CurTask == Task.Guard){
-			float distance = Vector3.Distance(this.gameObject.transform.position, target.gameObject.transform.position);
-				if (distance < 0.5f) {
-					this.gameObject.GetComponent<Animation> ().Play ("idle");
-				}
+            try
+            {
+                float distance = Vector3.Distance(this.gameObject.transform.position, target.gameObject.transform.position);
+                if (distance < 0.5f)
+                {
+                    this.gameObject.GetComponent<Animation>().Play("idle");
+                }
+            }
+            catch { }
 
 		}else if(CurTask == Task.Fighting){
 			float distance = Vector3.Distance (this.gameObject.transform.position, target.gameObject.transform.position);
