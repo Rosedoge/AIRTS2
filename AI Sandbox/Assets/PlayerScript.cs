@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+
 /// <summary>
 /// Player script.
 /// This script is based on the Game Controller
@@ -9,7 +11,8 @@ public class PlayerScript : MonoBehaviour {
 	/// 
 	/// </summary>
 	/// 
-
+	public GameObject TownHall;
+	public Text UIText;
 	GameObject selected;
 	RaycastHit hit;
 	int layerMask;
@@ -19,6 +22,7 @@ public class PlayerScript : MonoBehaviour {
 	void Start () {
 		selected = new GameObject ();
 		selected.AddComponent <WorkerScript>();
+		selected.AddComponent <NavMeshAgent>();
 		//selected = null;
 		// Bit shift the index of the layer (8) to get a bit mask
 		layerMask = 1 << 8;
@@ -37,10 +41,12 @@ public class PlayerScript : MonoBehaviour {
 				if (hit.collider.gameObject.GetComponent<WorkerScript> ()) {
 					selected = hit.collider.gameObject;
 					selected.gameObject.GetComponent<WorkerScript> ().selected = true;
-				}
-				if (hit.collider.gameObject.GetComponent<SoldierScript> ()) {
+				} else if (hit.collider.gameObject.GetComponent<SoldierScript> ()) {
 					selected = hit.collider.gameObject;
 					selected.gameObject.GetComponent<SoldierScript> ().selected = true;
+				} else if (hit.collider.gameObject.GetComponent<TownHall> ()) {
+					selected = hit.collider.gameObject;
+					selected.gameObject.GetComponent<TownHall> ().selected = true;
 				}
 			} else {
 				//selected.gameObject.GetComponent<WorkerScript> ().
@@ -72,7 +78,7 @@ public class PlayerScript : MonoBehaviour {
 					selected.gameObject.GetComponent<SoldierScript> ().selected = false;
 				selected = null;
 
-			} else if (hit.collider.gameObject.name == "Mine") {
+			} else if (hit.collider.gameObject.name == "Mine" ||hit.collider.gameObject.tag == "Tree") {
 				if (selected != null && selected.gameObject.GetComponent<WorkerScript> ()) {
 					Debug.Log ("Get to work");
 					selected.gameObject.GetComponent<WorkerScript> ().SetWork (hit.collider.gameObject);
@@ -100,8 +106,14 @@ public class PlayerScript : MonoBehaviour {
 			MouseClick ();
 
 		} else if (Input.GetMouseButtonDown (1)) {
-				RightClick();
+			RightClick();
 		}
+		UpdateUI ();
 	
+	}
+
+	void UpdateUI(){
+		UIText.text = "Wood: " + TownHall.gameObject.GetComponent<TownHall> ().Wood + "   Stone: " + TownHall.gameObject.GetComponent<TownHall> ().Stone;
+
 	}
 }

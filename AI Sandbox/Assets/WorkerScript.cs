@@ -14,16 +14,25 @@ public class WorkerScript : MonoBehaviour {
 	int CarryingResource = 0;
 	public bool AtResource = false, Feared = false;
 	public bool AtDrop = false;
-
+	string ResourceTarget;
 
 	void OnTriggerEnter(Collider col){
 		if (col.gameObject.name == "Mine") {
 			AtResource = true;
 			//Debug.Log ("STILL HERE LOL");
 		}
+		if (col.gameObject.name == "Tree") {
+			AtResource = true;
+			//Debug.Log ("STILL HERE LOL");
+		}
 		if (col.gameObject.name == "TownHall") {
 			AtDrop = true;
 		}
+//		if (col.gameObject.tag == "Enemy") {
+//			CurTask = Task.Scared;
+//			Feared = true;
+//		}
+
 
 	}
 	void OnTriggerExit(Collider col){
@@ -31,8 +40,16 @@ public class WorkerScript : MonoBehaviour {
 			AtResource = false;
 			//Debug.Log ("Left the mine!");
 		}
+		if (col.gameObject.name == "Tree") {
+			AtResource = false;
+			//Debug.Log ("Left the mine!");
+		}
 		if (col.gameObject.name == "TownHall") {
 			AtDrop = false;
+		}
+		if (col.gameObject.tag == "Enemy") {
+			CurTask = Task.None;
+			Feared = false;
 		}
 
 	}
@@ -57,7 +74,13 @@ public class WorkerScript : MonoBehaviour {
 	public void SetWork(GameObject tar){
 		CurTask = Task.Working;
 		TargetObject = tar;
+		if (tar.gameObject.name == "Mine") {
+			ResourceTarget = "Mine";
+		} else if (tar.gameObject.tag == "Tree") {
+			ResourceTarget = "Tree";
 
+
+		}
 	}
 
 
@@ -88,53 +111,107 @@ public class WorkerScript : MonoBehaviour {
 	/// </summary>
 
 	void Work(){
-		Debug.Log ("Base " + AtDrop + " Or Mine " + AtResource);
-		if (AtDrop) {
-			if (CarryingResource <= 0) {
-				//Gotta go back to work
-				this.gameObject.GetComponent<NavMeshAgent> ().destination = TargetObject.gameObject.transform.position;
-			} else {
-				Debug.Log ("Dropping stuff off, b0ss");
-				Home.gameObject.GetComponent<TownHall> ().TakeResources ("Stone", CarryingResource);
-				CarryingResource = 0;
-			}
+		if (ResourceTarget == "Mine") {
+			Debug.Log ("Base " + AtDrop + " Or Mine " + AtResource);
+			if (AtDrop) {
+				if (CarryingResource <= 0) {
+					//Gotta go back to work
+					this.gameObject.GetComponent<NavMeshAgent> ().destination = TargetObject.gameObject.transform.position;
+				} else {
+					Debug.Log ("Dropping stuff off, b0ss");
+					Home.gameObject.GetComponent<TownHall> ().TakeResources ("Stone", CarryingResource);
+					CarryingResource = 0;
+				}
 
-		} else if (AtResource) {
-			Debug.Log ("Trying to Mine");
-			if (CarryingResource >= 10) {
-				//Gotta go back to base
-				//this.gameObject.GetComponent<NavMeshAgent> ().destination = TargetObject.gameObject.transform.position;
-				this.gameObject.GetComponent<NavMeshAgent> ().destination = Home.gameObject.transform.position;
-				Debug.Log ("Going to drop this off " + CarryingResource);
-			} else {
-				//Gotta Get Mine Material
-				if (TargetObject.gameObject.GetComponent<MineScript> ()) { // It is a rock
-					if (Time.time - Lasttime > 1) {
-						if (TargetObject.gameObject.GetComponent<MineScript> ().GainRock ()) {
-							TargetObject.gameObject.GetComponent<MineScript> ().GainRock ();
-							CarryingResource += 1;
-							Debug.Log (CarryingResource);
-							Lasttime = Time.time;
-						} else { //empty, gotta go
+			} else if (AtResource) {
+				Debug.Log ("Trying to Mine");
+				if (CarryingResource >= 10) {
+					//Gotta go back to base
+					//this.gameObject.GetComponent<NavMeshAgent> ().destination = TargetObject.gameObject.transform.position;
+					this.gameObject.GetComponent<NavMeshAgent> ().destination = Home.gameObject.transform.position;
+					Debug.Log ("Going to drop this off " + CarryingResource);
+				} else {
+					//Gotta Get Mine Material
+					if (TargetObject.gameObject.GetComponent<MineScript> ()) { // It is a rock
+						if (Time.time - Lasttime > 1) {
+							if (TargetObject.gameObject.GetComponent<MineScript> ().GainRock ()) {
+								this.gameObject.GetComponent<Rigidbody> ().velocity = new Vector3 (0, 0, 0);
+								TargetObject.gameObject.GetComponent<MineScript> ().GainRock ();
+								CarryingResource += 1;
+								Debug.Log (CarryingResource);
+								Lasttime = Time.time;
+							} else { //empty, gotta go
 
 
+							}
 						}
 					}
 				}
+			} else {
+				if (CarryingResource <= 0) {
+					this.gameObject.GetComponent<NavMeshAgent> ().destination = TargetObject.gameObject.transform.position;
+				} else if (CarryingResource > 0) {
+					this.gameObject.GetComponent<NavMeshAgent> ().destination = Home.gameObject.transform.position;
+					Debug.Log ("Going to drop this off " + CarryingResource);
+				}
 			}
-		} else {
-			if (CarryingResource <= 0) {
-				this.gameObject.GetComponent<NavMeshAgent> ().destination = TargetObject.gameObject.transform.position;
-			} else if (CarryingResource > 0){
-				this.gameObject.GetComponent<NavMeshAgent> ().destination = Home.gameObject.transform.position;
-				Debug.Log ("Going to drop this off " + CarryingResource);
+		} else if (ResourceTarget == "Tree") {
+			Debug.Log ("Base " + AtDrop + " Or Tree " + AtResource);
+			if (AtDrop) {
+				if (CarryingResource <= 0) {
+					//Gotta go back to work
+					this.gameObject.GetComponent<NavMeshAgent> ().destination = TargetObject.gameObject.transform.position;
+				} else {
+					Debug.Log ("Dropping stuff off, b0ss");
+					Home.gameObject.GetComponent<TownHall> ().TakeResources ("Wood", CarryingResource);
+					CarryingResource = 0;
+				}
+
+			} else if (AtResource) {
+				Debug.Log ("Trying to Chop");
+				if (CarryingResource >= 10) {
+					//Gotta go back to base
+					//this.gameObject.GetComponent<NavMeshAgent> ().destination = TargetObject.gameObject.transform.position;
+					this.gameObject.GetComponent<NavMeshAgent> ().destination = Home.gameObject.transform.position;
+					Debug.Log ("Going to drop this off " + CarryingResource);
+				} else {
+					//Gotta Get Mine Material
+					if (TargetObject.gameObject.GetComponent<WoodScript> ()) { // It is a rock
+						if (Time.time - Lasttime > 1) {
+							if (TargetObject.gameObject.GetComponent<WoodScript> ().GainWood ()) {
+								this.gameObject.GetComponent<Rigidbody> ().velocity = new Vector3 (0, 0, 0);
+								TargetObject.gameObject.GetComponent<WoodScript> ().GainWood ();
+								CarryingResource += 1;
+								Debug.Log (CarryingResource);
+								Lasttime = Time.time;
+							} else { //empty, gotta go
+
+
+							}
+						}
+					}
+				}
+			} else {
+				if (CarryingResource <= 0) {
+					this.gameObject.GetComponent<NavMeshAgent> ().destination = TargetObject.gameObject.transform.position;
+				} else if (CarryingResource > 0) {
+					this.gameObject.GetComponent<NavMeshAgent> ().destination = Home.gameObject.transform.position;
+					Debug.Log ("Going to drop this off " + CarryingResource);
+				}
 			}
+
 		}
 
 
 	}
 	void Update()
 	{
+		this.gameObject.GetComponent<NavMeshAgent> ().speed = 3.5f;
+		if (CurTask == Task.None) {
+			this.gameObject.GetComponent<Rigidbody> ().velocity = new Vector3(0,0,0);
+
+
+		}
 		if ((CurTask == Task.Scared) && !Feared) {
 			Feared = true;
 			this.gameObject.GetComponent<NavMeshAgent> ().destination = Home.gameObject.transform.position;

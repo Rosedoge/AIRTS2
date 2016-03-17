@@ -19,6 +19,7 @@ public class TownHall : MonoBehaviour {
 			Food += amt;
 		} else if (type == "Wood") {
 			Wood += amt;
+			Debug.Log ("Wewd: " + Wood);
 		}
 
 	}

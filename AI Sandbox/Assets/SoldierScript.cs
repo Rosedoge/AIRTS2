@@ -29,41 +29,58 @@ public class SoldierScript : MonoBehaviour {
 
 	public void Attack(GameObject tar){
 		this.gameObject.GetComponent<NavMeshAgent> ().destination = tar.gameObject.transform.position;
-		Debug.Log ("Stop Working");
+		//Debug.Log ("Stop Working");
 		target = tar;//.gameObject.transform.position;
 		this.gameObject.GetComponent<Animation> ().Play ("Walk");
-
+		selected = false;
 
 	}
 
 
 	public void Move(RaycastHit hit){
 		this.gameObject.GetComponent<NavMeshAgent> ().destination = hit.point;
-		Debug.Log ("Stop Working");
+		//Debug.Log ("Stop Working");
 		target = hit.collider.gameObject;
+		//target.transform.position = hit.point;
 		this.gameObject.GetComponent<Animation> ().Play ("Walk");
 		CurTask = Task.Guard;
+	}
+
+	void FixedUpdate()
+	{
+		if ( gameObject.GetComponent<Rigidbody>().velocity.magnitude <= 0.01 )
+		{
+			//Debug.Log("unity answers saves the day!");
+		}
 	}
 
 	// Update is called once per frame
 	void Update () {
 		
 		if(CurTask == Task.Guard){
-			float distance = Vector3.Distance(this.gameObject.transform.position, target.gameObject.transform.position);
+			if (target != null) {
+				float distance = Vector3.Distance (this.gameObject.transform.position, target.gameObject.transform.position);
 				if (distance < 0.5f) {
 					this.gameObject.GetComponent<Animation> ().Play ("idle");
 				}
-
+			}
 		}else if(CurTask == Task.Fighting){
-			float distance = Vector3.Distance (this.gameObject.transform.position, target.gameObject.transform.position);
-			if (distance < 2.5f) {
-				this.gameObject.GetComponent<Animation> ().Play ("Attack");
-				this.gameObject.GetComponent<NavMeshAgent> ().destination = this.gameObject.transform.position;
+			if (target.gameObject != null && target.gameObject.GetComponent<EnemyController>().Dead == false) {
+				float distance = Vector3.Distance (this.gameObject.transform.position, target.gameObject.transform.position);
+				if (distance < 2.5f) {
+					gameObject.transform.LookAt(target.gameObject.transform.position);
+					this.gameObject.GetComponent<Animation> ().Play ("Attack");
+					//this.gameObject.GetComponent<NavMeshAgent> ().destination = this.gameObject.transform.position;
+				} else {
+					this.gameObject.GetComponent<NavMeshAgent> ().destination = target.gameObject.transform.position;
+
+				}
+				Debug.Log ("Task is: " + CurTask + "   And my Distance to the enemy is: " + distance);
 			} else {
-				this.gameObject.GetComponent<NavMeshAgent> ().destination = target.gameObject.transform.position;
+				CurTask = Task.Guard;
+				target = this.gameObject;
 
 			}
-			Debug.Log ("Task is: " + CurTask + "   And my Distance to the enemy is: " + distance);
 
 		}
 		try //omg ty
