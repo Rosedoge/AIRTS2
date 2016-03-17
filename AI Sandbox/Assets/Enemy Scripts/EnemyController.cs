@@ -13,9 +13,14 @@ public class EnemyController : MonoBehaviour
 	public GameObject[] EnemySwords;
 	private GameObject Target;
 
+<<<<<<< HEAD
 	int Health = 5;
 
 	public bool Dead = false;
+=======
+    private float maybeWaitTimer;
+    private bool maybeWaiting;
+>>>>>>> origin/master
 
     void Awake()
     {
@@ -33,6 +38,8 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         SetNearestTarget();
+        maybeWaitTimer = Random.Range(-1.0f, 1.0f);
+        maybeWaiting = false;
     }
 
 	void FixedUpdate(){
@@ -43,6 +50,7 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+<<<<<<< HEAD
 		if (curTask == Task.pathing) {
 			FollowPath ();
 		}
@@ -55,6 +63,9 @@ public class EnemyController : MonoBehaviour
 			Destroy (this.gameObject);
 
 		}
+=======
+        DoBehaviorTree();
+>>>>>>> origin/master
     }
 
 
@@ -141,19 +152,90 @@ public class EnemyController : MonoBehaviour
 
 	}
 
-    private void FollowPath()
+
+    private void DoBehaviorTree()
+    {
+        //This will consist of a structure of if, else if, and else statements
+        //Each statement will be driven by a helper method which will perform a
+        //check. If the check succeeds, a function will carry out the action.
+
+        if(CheckIsntChasing())
+        {
+            if(CheckIfNearTarget())
+            {
+                if (MaybeWait())
+                {
+                    FollowPath();
+                }
+            }
+        }
+    }
+
+
+    #region BehaviorTreeFunctions
+
+    private bool CheckIsntChasing()
+    {
+        if(curTask != Task.chasing)
+        {
+            return true;
+        }
+        navigationAgent.destination = Target.gameObject.transform.position;
+        return false;
+    }
+
+    private bool CheckIfNearTarget()
+    {
+        if (Vector3.Distance(transform.position, pathTargets[currentTarget]) < 1f)
+        {
+            currentTarget = (currentTarget + 1) % pathTargets.Count;
+            navigationAgent.destination = pathTargets[currentTarget];
+            return false;
+        }
+        return true;
+    }
+
+    private bool MaybeWait()
+    {
+        maybeWaitTimer -= Time.deltaTime;
+
+        Debug.Log(maybeWaiting);
+
+        if(maybeWaitTimer <= 0)
+        {
+            maybeWaitTimer = Random.Range(5.0f, 10.0f);
+            if(Random.Range(0,2) == 0)
+            {
+                maybeWaiting = true;
+                navigationAgent.enabled = true;
+            }
+            else
+            {
+                maybeWaiting = false;
+                navigationAgent.enabled = false;
+            }
+        }
+
+        return maybeWaiting;
+    }
+
+    private bool FollowPath() //Action - always returns true
     {
         Debug.DrawLine(transform.position, pathTargets[currentTarget], Color.black);
-        if(Vector3.Distance(transform.position, pathTargets[currentTarget]) < 1f)
+        if (Vector3.Distance(transform.position, pathTargets[currentTarget]) < 1f)
         {
             currentTarget = (currentTarget + 1) % pathTargets.Count;
             navigationAgent.destination = pathTargets[currentTarget];
             Debug.Log(currentTarget);
         }
 
-        if(navigationAgent.destination != pathTargets[currentTarget])
+        if (navigationAgent.destination != pathTargets[currentTarget])
         {
             navigationAgent.destination = pathTargets[currentTarget];
         }
+        return true;
     }
+
+    #endregion
+
 }
