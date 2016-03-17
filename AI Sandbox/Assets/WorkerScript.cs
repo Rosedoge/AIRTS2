@@ -212,7 +212,11 @@ public class WorkerScript : MonoBehaviour {
 	{
 		this.gameObject.GetComponent<NavMeshAgent> ().speed = 3.5f;
 		if (CurTask == Task.None) {
-			this.gameObject.GetComponent<Rigidbody> ().velocity = new Vector3(0,0,0);
+            try
+            {
+                this.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+            }
+            catch { }
 
 
 		}

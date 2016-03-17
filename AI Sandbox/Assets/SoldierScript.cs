@@ -58,14 +58,6 @@ public class SoldierScript : MonoBehaviour {
 	void Update () {
 		
 		if(CurTask == Task.Guard){
-<<<<<<< HEAD
-			if (target != null) {
-				float distance = Vector3.Distance (this.gameObject.transform.position, target.gameObject.transform.position);
-				if (distance < 0.5f) {
-					this.gameObject.GetComponent<Animation> ().Play ("idle");
-				}
-			}
-=======
             try
             {
                 float distance = Vector3.Distance(this.gameObject.transform.position, target.gameObject.transform.position);
@@ -76,7 +68,6 @@ public class SoldierScript : MonoBehaviour {
             }
             catch { }
 
->>>>>>> origin/master
 		}else if(CurTask == Task.Fighting){
 			if (target.gameObject != null && target.gameObject.GetComponent<EnemyController>().Dead == false) {
 				float distance = Vector3.Distance (this.gameObject.transform.position, target.gameObject.transform.position);

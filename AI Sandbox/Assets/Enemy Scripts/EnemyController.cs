@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class EnemyController : MonoBehaviour
 {
-	List<GameObject> ThingsAround;
+	private List<GameObject> ThingsAround;
     public List<Vector3> pathTargets;
     private int currentTarget;
 	public enum Task {chasing, pathing};
@@ -13,14 +13,11 @@ public class EnemyController : MonoBehaviour
 	public GameObject[] EnemySwords;
 	private GameObject Target;
 
-<<<<<<< HEAD
-	int Health = 5;
+	public int Health = 5;
 
 	public bool Dead = false;
-=======
     private float maybeWaitTimer;
     private bool maybeWaiting;
->>>>>>> origin/master
 
     void Awake()
     {
@@ -50,22 +47,13 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-<<<<<<< HEAD
-		if (curTask == Task.pathing) {
-			FollowPath ();
-		}
-		if (curTask == Task.chasing) {
-			navigationAgent.destination = Target.gameObject.transform.position;
-		}
+        DoBehaviorTree();
 
 		if (Health <= 0) {
 			Dead = true;
 			Destroy (this.gameObject);
 
 		}
-=======
-        DoBehaviorTree();
->>>>>>> origin/master
     }
 
 
