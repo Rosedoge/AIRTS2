@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 public class EnemyController : MonoBehaviour
 {
+
+	public int SoundVal = 4;
+
 	private List<GameObject> ThingsAround;
     public List<Vector3> pathTargets;
     private int currentTarget;
@@ -34,13 +37,18 @@ public class EnemyController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+		SoundVal = Random.Range (1, 5);
         SetNearestTarget();
         maybeWaitTimer = Random.Range(-1.0f, 1.0f);
         maybeWaiting = false;
     }
 
 	void FixedUpdate(){
-		ThingsAround.RemoveAll (null);
+		try{
+			ThingsAround.RemoveAll (null);
+		}
+		catch{
+		}
 
 	}
 

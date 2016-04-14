@@ -54,12 +54,15 @@
      <Compile Include="Assets\Easy Menu - System\_Scripts\C# version (Beta)\OpenByRaycastedTrigger.cs" />
      <Compile Include="Assets\Enemy Scripts\EnemyController.cs" />
      <Compile Include="Assets\ExampleClass.cs" />
+     <Compile Include="Assets\HunterScript.cs" />
+     <Compile Include="Assets\Mastermind.cs" />
      <Compile Include="Assets\MineScript.cs" />
      <Compile Include="Assets\PlayerScript.cs" />
      <Compile Include="Assets\SoldierScript.cs" />
      <Compile Include="Assets\SwordScript.cs" />
      <Compile Include="Assets\TankScript.cs" />
      <Compile Include="Assets\TownHall.cs" />
+     <Compile Include="Assets\WizardScript.cs" />
      <Compile Include="Assets\WoodScript.cs" />
      <Compile Include="Assets\WorkerScript.cs" />
      <None Include="Assets\PBS Materials Variety Pack\readme.txt" />

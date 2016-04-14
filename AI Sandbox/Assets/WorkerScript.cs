@@ -2,6 +2,8 @@
 using System.Collections;
 
 public class WorkerScript : MonoBehaviour {
+
+	public int SoundVal = 5;
 	Behaviour halo;// = (Behaviour)GetComponent("Halo");
 	public bool selected = false;
 	public enum Task {None,Working,Fighting,Guard,Scared};
@@ -54,6 +56,7 @@ public class WorkerScript : MonoBehaviour {
 
 	}
 	void Start () {
+		SoundVal = Random.Range (3, 7);
 		//gameObject.GetComponent<Halo
 		Home = GameObject.FindGameObjectWithTag("TownHall");
         try
