@@ -12,6 +12,15 @@ public class Swarmer : MonoBehaviour
 
     public GameObject[] fleeTargets;
 
+    public bool IsAlive
+    {
+        get { return alive; }
+    }
+
+    public int ChromosomeLength
+    {
+        get { return 7; }
+    }
 
     // Use this for initialization
     void Start()
@@ -33,7 +42,8 @@ public class Swarmer : MonoBehaviour
     }
 
 
-    public void Generate(int[] chromosome)
+    //Reinitialize this swarmer with a new chromosome (effectively making a "new" one)
+    public void MakeNewSwarmer(int[] chromosome)
     {
         alive = false;
 
@@ -61,6 +71,7 @@ public class Swarmer : MonoBehaviour
         chromosome[4] = speed;
         chromosome[5] = (int)(lifeTime * 100.0f);
         chromosome[6] = amountGrabbed;
+        chromosome[7] = 0; //Fitness placeholder
 
         return chromosome;
     }
