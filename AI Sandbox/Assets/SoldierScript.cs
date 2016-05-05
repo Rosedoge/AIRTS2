@@ -4,8 +4,8 @@ using System.Collections;
 public class SoldierScript : MonoBehaviour {
 
 	public int SoundVal = 10;
-
-	Behaviour halo;// = (Behaviour)GetComponent("Halo");
+    public int GoodAround = 0, BadAround = 0;
+    Behaviour halo;// = (Behaviour)GetComponent("Halo");
 	public bool selected = false;
 	public enum Task {Fighting,Guard};
 	public Task CurTask;
@@ -16,9 +16,48 @@ public class SoldierScript : MonoBehaviour {
 	GameObject Home;
 	float Lasttime;
 
-	// Use this for initialization
-	void Start () {
-		SoundVal = Random.Range (5, 10);
+    void OnTriggerEnter(Collider col)
+    {
+        if (col.gameObject.tag == "Villager")
+        {
+            GoodAround += 1;
+
+        }
+        else if (col.gameObject.tag == "Warrior")
+        {
+            GoodAround += 1;
+        }
+        else if (col.gameObject.tag == "Enemy")
+        {
+
+            BadAround += 1;
+
+        }
+    }
+
+    void OnTriggerExit(Collider col)
+    {
+
+        if (col.gameObject.tag == "Villager")
+        {
+            GoodAround -= 1;
+
+        }
+        if (col.gameObject.tag == "Warrior")
+        {
+            GoodAround -= 1;
+        }
+        if (col.gameObject.tag == "Enemy")
+        {
+
+            BadAround -= 1;
+        }
+    }
+    
+    // Use this for initialization
+    void Start () {
+        this.GetComponent<GBScript>().goodorbad = 2;
+        SoundVal = Random.Range (5, 10);
 		//gameObject.GetComponent<Halo
 		Home = GameObject.FindGameObjectWithTag("TownHall");
 		try

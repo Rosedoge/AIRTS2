@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 
@@ -35,29 +34,43 @@ public class HunterScript : MonoBehaviour {
 		//Target = Mastermind.GetComponent<Mastermind> ().MstrGetTarget ();
 	}
 
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.GetComponent<WorkerScript>() || col.gameObject.GetComponent<SoldierScript>())
+        {
+            Mastermind.GetComponent<Mastermind>().AddSoundEnd(col.gameObject, 2);
+            Death();
 
+        }
+        else if (col.gameObject.GetComponent<EnemyController>())
+        {
+            Mastermind.GetComponent<Mastermind>().AddSoundEnd(col.gameObject, 1); // bad thing yo
+            Death();
+        }
+
+    }
 
 	void OnTriggerEnter(Collider col){
 		ThingsAround.Add (col.gameObject);
 		if (col.gameObject.GetComponent<WorkerScript> () || col.gameObject.GetComponent<SoldierScript> () || col.gameObject.GetComponent<EnemyController> ()) {
 			try{
-				Mastermind.GetComponent<Mastermind> ().AddSound (col.gameObject);
+				Mastermind.GetComponent<Mastermind> ().AddThing (col.gameObject);
 			}catch{
 			}
-			try{
-				Mastermind.GetComponent<Mastermind> ().AddSound (col.gameObject);
-			}catch{
-			}
-			try{
-				Mastermind.GetComponent<Mastermind> ().AddSound (col.gameObject);
-			}catch{
-			}
+			//try{
+			//	Mastermind.GetComponent<Mastermind> ().AddThing (col.gameObject);
+			//}catch{
+			//}
+			//try{
+			//	Mastermind.GetComponent<Mastermind> ().AddThing (col.gameObject);
+			//}catch{
+			//}
 		}
 	}
 
 	public void Death(){
-		Mastermind.GetComponent<Mastermind> ().AddSoundEnd (1);
-
+        //Mastermind.GetComponent<Mastermind> ().AddSoundEnd (1);
+        Destroy(this.gameObject);
 
 	}
 
@@ -68,7 +81,8 @@ public class HunterScript : MonoBehaviour {
 	}
 
 	GameObject GetTarget(){
-		return Mastermind.GetComponent<Mastermind> ().MstrGetTarget ();
+
+		return Mastermind.GetComponent<Mastermind> ().GetUnknown();
 
 
 	}
@@ -77,12 +91,14 @@ public class HunterScript : MonoBehaviour {
 	void Update () {
 		if (Target == null) {
 			Target = GetTarget ();
-			Debug.Log ("Target name is: " + Target.gameObject.name);
+            try
+            {
+                Debug.Log("Target name is: " + Target.gameObject.name);
+            }
+            catch { }
 		} else {
 			if (this.gameObject.GetComponent<NavMeshAgent> ().destination != Target.transform.position) {
 				this.gameObject.GetComponent<NavMeshAgent> ().destination = Target.transform.position;
-
-
 			}
 
 		}

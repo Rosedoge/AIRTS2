@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class WorkerScript : MonoBehaviour {
-
-	public int SoundVal = 5;
+    public int GoodAround = 0, BadAround = 0;
+    public int SoundVal = 5;
 	Behaviour halo;// = (Behaviour)GetComponent("Halo");
 	public bool selected = false;
 	public enum Task {None,Working,Fighting,Guard,Scared};
@@ -30,15 +29,41 @@ public class WorkerScript : MonoBehaviour {
 		if (col.gameObject.name == "TownHall") {
 			AtDrop = true;
 		}
-//		if (col.gameObject.tag == "Enemy") {
-//			CurTask = Task.Scared;
-//			Feared = true;
-//		}
+
+        if (col.gameObject.tag == "Villager")
+        {
+            GoodAround += 1;
+
+        }
+        else if (col.gameObject.tag == "Warrior")
+        {
+            GoodAround += 1;
+        }
+        else if (col.gameObject.tag == "Enemy")
+        {
+
+            BadAround += 1;
+        }
 
 
-	}
+    }
 	void OnTriggerExit(Collider col){
-		if (col.gameObject.name == "Mine") {
+
+        if (col.gameObject.tag == "Villager")
+        {
+            GoodAround -= 1;
+
+        }
+        if (col.gameObject.tag == "Warrior")
+        {
+            GoodAround -= 1;
+        }
+        if (col.gameObject.tag == "Enemy")
+        {
+
+            BadAround -= 1;
+        }
+        if (col.gameObject.name == "Mine") {
 			AtResource = false;
 			//Debug.Log ("Left the mine!");
 		}
@@ -57,8 +82,9 @@ public class WorkerScript : MonoBehaviour {
 	}
 	void Start () {
 		SoundVal = Random.Range (3, 7);
-		//gameObject.GetComponent<Halo
-		Home = GameObject.FindGameObjectWithTag("TownHall");
+        this.GetComponent<GBScript>().goodorbad = 2;
+        //gameObject.GetComponent<Halo
+        Home = GameObject.FindGameObjectWithTag("TownHall");
         try
         {
             halo = (Behaviour)GetComponent("Halo");

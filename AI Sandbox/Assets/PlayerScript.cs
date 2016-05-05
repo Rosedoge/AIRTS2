@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
+
 
 /// <summary>
 /// Player script.
@@ -20,9 +20,9 @@ public class PlayerScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		selected = new GameObject ();
-		selected.AddComponent <WorkerScript>();
-		selected.AddComponent <NavMeshAgent>();
+        selected = null;// new GameObject ();
+		//selected.AddComponent <WorkerScript>();
+		//selected.AddComponent <NavMeshAgent>();
 		//selected = null;
 		// Bit shift the index of the layer (8) to get a bit mask
 		layerMask = 1 << 8;

@@ -7,6 +7,7 @@ public class EnemyController : MonoBehaviour
 
 	public int SoundVal = 4;
 
+    public int GoodAround = 0, BadAround = 0;
 	private List<GameObject> ThingsAround;
     public List<Vector3> pathTargets;
     private int currentTarget;
@@ -17,7 +18,7 @@ public class EnemyController : MonoBehaviour
 	private GameObject Target;
 
 	public int Health = 5;
-
+	public int GoodOrBad = 1;
 	public bool Dead = false;
     private float maybeWaitTimer;
     private bool maybeWaiting;
@@ -37,6 +38,7 @@ public class EnemyController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+		this.GetComponent<GBScript>().goodorbad = GoodOrBad;
 		SoundVal = Random.Range (1, 5);
         SetNearestTarget();
         maybeWaitTimer = Random.Range(-1.0f, 1.0f);
@@ -90,6 +92,7 @@ public class EnemyController : MonoBehaviour
 	void OnTriggerEnter(Collider col){
 		ThingsAround.Add (col.gameObject);
 		if (col.gameObject.tag == "Villager") { // finds a villager
+            GoodAround += 1;
 			if (CheckSafety ()) { //more allies than soldiers around
 				navigationAgent.destination = col.gameObject.transform.position;
 				col.gameObject.GetComponent<WorkerScript> ().Feared = true;
@@ -99,7 +102,15 @@ public class EnemyController : MonoBehaviour
 
 
 			}
-		}
+            
+		}else if(col.gameObject.tag == "Warrior")
+        {
+            GoodAround += 1;
+        }else if(col.gameObject.tag == "Enemy")
+        {
+
+            BadAround += 1;
+        }
 
 //			Health -= 1;
 //			Debug.Log ("My health is lower! " + Health);
@@ -138,6 +149,7 @@ public class EnemyController : MonoBehaviour
 	void OnTriggerExit(Collider col){
 		ThingsAround.Remove(col.gameObject);
 		if (col.gameObject.tag == "Villager") {
+            GoodAround -= 1;
 			//Will set the villager to a 'run' status where it will do it's best to move to safety, in this case, the Town Hall
 			col.gameObject.GetComponent<WorkerScript>().CurTask = WorkerScript.Task.None;
 			col.gameObject.GetComponent<WorkerScript> ().Feared = false;
@@ -145,8 +157,18 @@ public class EnemyController : MonoBehaviour
 			Target = null;
 		}
 
+        if (col.gameObject.tag == "Warrior")
+        {
+            GoodAround -= 1;
+        }
+        if (col.gameObject.tag == "Enemy")
+        {
 
-	}
+            BadAround -= 1;
+        }
+
+
+    }
 
 
     private void DoBehaviorTree()
