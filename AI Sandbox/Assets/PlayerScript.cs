@@ -113,7 +113,11 @@ public class PlayerScript : MonoBehaviour {
 	}
 
 	void UpdateUI(){
-		UIText.text = "Wood: " + TownHall.gameObject.GetComponent<TownHall> ().Wood + "   Stone: " + TownHall.gameObject.GetComponent<TownHall> ().Stone;
+        try
+        {
+            UIText.text = "Wood: " + TownHall.gameObject.GetComponent<TownHall>().Wood + "   Stone: " + TownHall.gameObject.GetComponent<TownHall>().Stone;
+        }
+        catch { }
 
 	}
 }
