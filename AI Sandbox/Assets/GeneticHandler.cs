@@ -42,6 +42,7 @@ public class GeneticHandler : MonoBehaviour
         //Format for Array
         //Rows - Each row = one chromosome
         //Columns - 0: SeekDist, 1: FleeDist, 2: WanderDist, 3: Grab Amount(capacity), 4: Speed, 5: Lifetime, 6: Amount Grabbed(total), 7: Fitness
+        //             0 - 100      0-50          0-5            0-5                       0-5
         int[][] chromosomes = new int[population[0].ChromosomeLength + 1][];
         for (int i = 0; i < chromosomes.Length; i++)
         {
@@ -149,6 +150,18 @@ public class GeneticHandler : MonoBehaviour
                 }
             }
 
+            if(Random.Range(0,4) == 0)
+            {
+                if(Random.Range(0, 1) == 0)
+                {
+                    winner1 = Mutate(winner1);
+                }
+                else
+                {
+                    winner2 = Mutate(winner2);
+                }
+            }
+
 
             //Reset lifetime, gathered ammount, fitness
             winner1[5] = 0;
@@ -171,5 +184,29 @@ public class GeneticHandler : MonoBehaviour
         {
             population[i].MakeNewSwarmer(newPop[i]);
         }
+    }
+
+    private int[] Mutate(int[] chromosome)
+    {
+        int index = Random.Range(0, 4);
+
+        //Columns - 0: SeekDist, 1: FleeDist, 2: WanderDist, 3: Grab Amount(capacity), 4: Speed, 5: Lifetime, 6: Amount Grabbed(total), 7: Fitness
+        //             0 - 100      0-50          0-5            0-5                       0-5
+
+        switch (index)
+        {
+            case 0:
+                chromosome[index] = Random.Range(0, 100);
+                break;
+            case 1:
+                chromosome[index] = Random.Range(0, 50);
+                break;
+            default:
+                chromosome[index] = Random.Range(0, 5);
+                break;
+
+        }
+
+        return chromosome;
     }
 }
