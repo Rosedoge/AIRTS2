@@ -49,7 +49,7 @@ public class GeneticHandler : MonoBehaviour
 
         List<int[]> chromosomes = new List<int[]>();
 
-        Debug.Log("-------!!!!!!!!!!!!!!!!!!!!!!!!!!!!-------NEW GENERATION-------!!!!!!!!!!!!!!!!!!!!!!!!!!!!-------");
+        Debug.Log("-------!!!!!!!!!!!!!!!!!!!!!!!!!!!!----vv--OLD GENERATION--vv----!!!!!!!!!!!!!!!!!!!!!!!!!!!!-------");
         for (int i = 0; i < population.Length; i++)
         {
             int[] chromosome = population[i].GetChromosome();
@@ -57,6 +57,8 @@ public class GeneticHandler : MonoBehaviour
             chromosomes.Add(chromosome);
             ChromosomeToDebugPrint(chromosome);
         }
+
+        Debug.Log("-------!!!!!!!!!!!!!!!!!!!!!!!!!!!!-------NEW GENERATION-------!!!!!!!!!!!!!!!!!!!!!!!!!!!!-------");
 
         CrossBreed(population.Length, chromosomes);
     }
@@ -191,6 +193,8 @@ public class GeneticHandler : MonoBehaviour
 
         //Columns - 0: SeekDist, 1: FleeDist, 2: WanderDist, 3: Grab Amount(capacity), 4: Speed, 5: Lifetime, 6: Amount Grabbed(total), 7: Fitness
         //             0 - 100      0-50          0-30            0-5                       0-5
+
+        Debug.Log("Mutation!");
 
         switch (index)
         {
