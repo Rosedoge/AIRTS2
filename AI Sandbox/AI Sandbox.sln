@@ -1,7 +1,7 @@
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2008
-
-Project("{BA2EEB32-FE1E-3A84-A349-24CA8A481D9A}") = "AI Sandbox", "Assembly-CSharp.csproj", "{66B3218D-73CA-376D-40E8-C9C3323C70CF}"
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AI Sandbox.CSharp", "AI Sandbox.CSharp.csproj", "{F4362BDD-2ACD-84BE-E590-AE45F31F9001}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,15 +9,12 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{66B3218D-73CA-376D-40E8-C9C3323C70CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{66B3218D-73CA-376D-40E8-C9C3323C70CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{66B3218D-73CA-376D-40E8-C9C3323C70CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{66B3218D-73CA-376D-40E8-C9C3323C70CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4362BDD-2ACD-84BE-E590-AE45F31F9001}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4362BDD-2ACD-84BE-E590-AE45F31F9001}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4362BDD-2ACD-84BE-E590-AE45F31F9001}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4362BDD-2ACD-84BE-E590-AE45F31F9001}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Assembly-CSharp.csproj
 	EndGlobalSection
 EndGlobal

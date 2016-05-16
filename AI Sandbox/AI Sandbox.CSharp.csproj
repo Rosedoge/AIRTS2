@@ -40,11 +40,6 @@
     <DefineConstants>TRACE;UNITY_5_3_OR_NEWER;UNITY_5_3_4;UNITY_5_3;UNITY_5;ENABLE_NEW_BUGREPORTER;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_SPRITE_POLYGON;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_LOCALIZATION;ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION;ENABLE_EDITOR_TESTS_RUNNER;UNITY_WEBPLAYER;ENABLE_SUBSTANCE;WEBPLUG;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_MONO;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN</DefineConstants>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
-  <PropertyGroup>
-
-    <ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>true</ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>
-
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
     <Reference Include="System" />
@@ -66,7 +61,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\CameraMover.cs" />
     <Compile Include="Assets\Easy Menu - System\_Scripts\C# version (Beta)\LevelComplete.cs" />
     <Compile Include="Assets\Easy Menu - System\_Scripts\C# version (Beta)\MenuElements.cs" />
     <Compile Include="Assets\Easy Menu - System\_Scripts\C# version (Beta)\MenuManager.cs" />
@@ -74,19 +68,22 @@
     <Compile Include="Assets\Easy Menu - System\_Scripts\C# version (Beta)\OpenByButton.cs" />
     <Compile Include="Assets\Easy Menu - System\_Scripts\C# version (Beta)\OpenByRaycastedTrigger.cs" />
     <Compile Include="Assets\Enemy Scripts\EnemyController.cs" />
-    <Compile Include="Assets\ExampleClass.cs" />
-    <Compile Include="Assets\GBScript.cs" />
-    <Compile Include="Assets\HunterScript.cs" />
-    <Compile Include="Assets\Mastermind.cs" />
-    <Compile Include="Assets\MineScript.cs" />
-    <Compile Include="Assets\PlayerScript.cs" />
-    <Compile Include="Assets\SoldierScript.cs" />
-    <Compile Include="Assets\SwordScript.cs" />
-    <Compile Include="Assets\TankScript.cs" />
-    <Compile Include="Assets\TownHall.cs" />
-    <Compile Include="Assets\WizardScript.cs" />
-    <Compile Include="Assets\WoodScript.cs" />
-    <Compile Include="Assets\WorkerScript.cs" />
+    <Compile Include="Assets\Scripts\CameraMover.cs" />
+    <Compile Include="Assets\Scripts\ExampleClass.cs" />
+    <Compile Include="Assets\Scripts\GBScript.cs" />
+    <Compile Include="Assets\Scripts\GeneticHandler.cs" />
+    <Compile Include="Assets\Scripts\HunterScript.cs" />
+    <Compile Include="Assets\Scripts\Mastermind.cs" />
+    <Compile Include="Assets\Scripts\MineScript.cs" />
+    <Compile Include="Assets\Scripts\PlayerScript.cs" />
+    <Compile Include="Assets\Scripts\SoldierScript.cs" />
+    <Compile Include="Assets\Scripts\Swarmer.cs" />
+    <Compile Include="Assets\Scripts\SwordScript.cs" />
+    <Compile Include="Assets\Scripts\TankScript.cs" />
+    <Compile Include="Assets\Scripts\TownHall.cs" />
+    <Compile Include="Assets\Scripts\WizardScript.cs" />
+    <Compile Include="Assets\Scripts\WoodScript.cs" />
+    <Compile Include="Assets\Scripts\WorkerScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\PBS Materials Variety Pack\readme.txt" />

@@ -54,6 +54,13 @@ public class EnemyController : MonoBehaviour
 
 	}
 
+	void OnCollisionEnter(Collision col){
+		if (col.gameObject.GetComponent<WorkerScript> ()) {
+			col.gameObject.GetComponent<WorkerScript> ().TakeDamage ();
+			Destroy (this.gameObject);
+		}
+
+	}
     // Update is called once per frame
     void Update()
     {

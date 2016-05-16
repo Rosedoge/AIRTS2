@@ -54,11 +54,8 @@
      <Compile Include="Assets\Easy Menu - System\_Scripts\C# version (Beta)\OpenByRaycastedTrigger.cs" />
      <Compile Include="Assets\Enemy Scripts\EnemyController.cs" />
      <Compile Include="Assets\ExampleClass.cs" />
-<<<<<<< HEAD
      <Compile Include="Assets\GBScript.cs" />
-=======
      <Compile Include="Assets\GeneticHandler.cs" />
->>>>>>> origin/master
      <Compile Include="Assets\HunterScript.cs" />
      <Compile Include="Assets\Mastermind.cs" />
      <Compile Include="Assets\MineScript.cs" />
