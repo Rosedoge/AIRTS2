@@ -40,11 +40,11 @@ public class Swarmer : MonoBehaviour
         //Columns - 0: SeekDist, 1: FleeDist, 2: WanderDist, 3: Grab Amount(capacity), 4: Speed, 5: Lifetime, 6: Amount Grabbed(total), 7: Fitness
         //             0 - 100      0-50          0-30            0-5                       0-5
 
-        seekDist = Random.Range(0, 100);
-        fleeDist = Random.Range(0, 50);
-        wanderStrength = Random.Range(0, 30);
-        grabAmount = Random.Range(0, 5);
-        speed = Random.Range(0, 5);
+        seekDist = Random.Range(0, 101);
+        fleeDist = Random.Range(0, 51);
+        wanderStrength = Random.Range(0, 31);
+        grabAmount = Random.Range(0, 6);
+        speed = Random.Range(0, 6);
 
         lifeTime = 0.0f;
         amountGrabbed = 0;
@@ -56,7 +56,12 @@ public class Swarmer : MonoBehaviour
 
         transform.position = homeBase.transform.position;
 
+        fleeTargets = GameObject.FindGameObjectsWithTag("Warrior");
+
+        this.gameObject.GetComponent<MeshRenderer>().enabled = true;
         alive = true;
+
+        
     }
 
     // Update is called once per frame
@@ -126,6 +131,8 @@ public class Swarmer : MonoBehaviour
 
         transform.position = homeBase.transform.position;
 
+        this.gameObject.GetComponent<MeshRenderer>().enabled = true;
+
         alive = true;
     }
 
@@ -183,7 +190,13 @@ public class Swarmer : MonoBehaviour
         {
             if (Vector3.Distance(transform.position, nearest.transform.position) <= fleeDist)
             {
-                velocity += this.transform.position - nearest.transform.position;
+                velocity += (this.transform.position - nearest.transform.position)*100.0f;
+            }
+
+            if(Vector3.Distance(transform.position, nearest.transform.position) <= 3.0f)
+            {
+                alive = false;
+                this.gameObject.GetComponent<MeshRenderer>().enabled = false;
             }
         }
 
@@ -212,6 +225,15 @@ public class Swarmer : MonoBehaviour
             {
                 inHand++;
                 grabTimer = 1.0f;
+                amountGrabbed++;
+                if (Random.Range(0,2) == 0)
+                {
+                    target.GetComponent<TownHall>().Stone--;
+                }
+                else
+                {
+                    target.GetComponent<TownHall>().Wood--;
+                }
             }
             grabTimer -= Time.deltaTime;
         }
@@ -229,7 +251,6 @@ public class Swarmer : MonoBehaviour
             if (grabTimer <= 0)
             {
                 inHand--;
-                amountGrabbed++;
                 grabTimer = 1;
             }
             grabTimer -= Time.deltaTime;

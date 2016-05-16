@@ -38,7 +38,7 @@ public class TownHall : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	    if(Wood >= 1000 && Stone >= 1000)
+	    if(Wood >= 200 && Stone >= 200)
         {
 
             EndGame();

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class MineScript : MonoBehaviour {
 
-	public int NumRock = 100;
+	public int NumRock = 10000;
 	//public string name = "Quarry";
 
 

@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\ColorRandomizer.cs" />
     <Compile Include="Assets\Easy Menu - System\_Scripts\C# version (Beta)\LevelComplete.cs" />
     <Compile Include="Assets\Easy Menu - System\_Scripts\C# version (Beta)\MenuElements.cs" />
     <Compile Include="Assets\Easy Menu - System\_Scripts\C# version (Beta)\MenuManager.cs" />

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class WoodScript : MonoBehaviour {
 
-	public int NumWood = 100;
+	public int NumWood = 10000;
 	//public string name = "Quarry";
 
 
