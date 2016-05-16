@@ -5,7 +5,12 @@ using System.Collections.Generic;
 public class GeneticHandler : MonoBehaviour
 {
     private Swarmer[] population;
+    public float lifeTime;
 
+    public float LifeTime
+    {
+        get { return lifeTime; }
+    }
 
     // Use this for initialization
     void Start()
@@ -39,38 +44,44 @@ public class GeneticHandler : MonoBehaviour
 
     private void GenerateNewPopulation()
     {
-        //Format for Array
-        //Rows - Each row = one chromosome
         //Columns - 0: SeekDist, 1: FleeDist, 2: WanderDist, 3: Grab Amount(capacity), 4: Speed, 5: Lifetime, 6: Amount Grabbed(total), 7: Fitness
-        int[][] chromosomes = new int[population[0].ChromosomeLength + 1][];
-        for (int i = 0; i < chromosomes.Length; i++)
+        //             0 - 100      0-50          0-30            0-5                       0-5
+
+        List<int[]> chromosomes = new List<int[]>();
+
+        Debug.Log("-------!!!!!!!!!!!!!!!!!!!!!!!!!!!!----vv--OLD GENERATION--vv----!!!!!!!!!!!!!!!!!!!!!!!!!!!!-------");
+        for (int i = 0; i < population.Length; i++)
         {
-            chromosomes[i] = new int[population.Length];
+            int[] chromosome = population[i].GetChromosome();
+            chromosome[7] = DetermineFitness(chromosome[5], chromosome[6]);
+            chromosomes.Add(chromosome);
+            ChromosomeToDebugPrint(chromosome);
         }
 
-        
-        for (int y = 0; y < population.Length; y++)
-        {
-            chromosomes[y] = population[y].GetChromosome();
-            chromosomes[y][7] = DetermineFitness(chromosomes[y][5], chromosomes[y][6]);
-        }
+        Debug.Log("-------!!!!!!!!!!!!!!!!!!!!!!!!!!!!-------NEW GENERATION-------!!!!!!!!!!!!!!!!!!!!!!!!!!!!-------");
 
         CrossBreed(population.Length, chromosomes);
     }
 
     private int DetermineFitness(int timeAlive, int totalCollected)
     {
-        return timeAlive / totalCollected;
+        if (timeAlive > 0)
+        {
+            int fitness = totalCollected * timeAlive;
+            if (fitness == 0)
+            {
+                fitness = Random.Range(0, 400);
+            }
+
+            return fitness;
+        }
+        return 0;
     }
 
-    private void CrossBreed(int numChromosomes, int[][] chromosomes)
+    private void CrossBreed(int numChromosomes, List<int[]> chromosomes)
     {
         //Get list of all chromosomes
-        List<int[]> chromos = new List<int[]>();
-        for (int i = 0; i < numChromosomes; i++)
-        {
-            chromos.Add(chromosomes[i]);
-        }
+        List<int[]> chromos = chromosomes;
 
         //Set up variables
         List<int[]> newPop = new List<int[]>();
@@ -80,7 +91,7 @@ public class GeneticHandler : MonoBehaviour
 
 
         //While there are still some in the original population
-        while (chromos.Count > 0)
+        while (newPop.Count < chromos.Count)
         {
             //How big are the two tournaments (will always be even)
             int size1 = chromos.Count / 2;
@@ -97,14 +108,12 @@ public class GeneticHandler : MonoBehaviour
             {
                 int randInt = Random.Range(0, chromos.Count);
                 tourney1.Add(chromos[randInt]);
-                chromos.Remove(chromos[randInt]);
             }
 
             for (int i = 0; i < size2; i++)
             {
                 int randInt = Random.Range(0, chromos.Count);
                 tourney2.Add(chromos[randInt]);
-                chromos.Remove(chromos[randInt]);
             }
 
 
@@ -114,10 +123,6 @@ public class GeneticHandler : MonoBehaviour
                 int[] competitor = tourney1[i];
                 if (competitor[7] > winner1[7])
                 {
-                    if(winner1[7] > -1)
-                    {
-                        chromos.Add(winner1);
-                    }
                     winner1 = competitor;
                 }
             }
@@ -127,13 +132,10 @@ public class GeneticHandler : MonoBehaviour
                 int[] competitor = tourney2[i];
                 if (competitor[7] > winner2[7])
                 {
-                    if (winner2[7] > -1)
-                    {
-                        chromos.Add(winner2);
-                    }
                     winner2 = competitor;
                 }
             }
+
 
 
             //Do a random crossover for real chromosome variables
@@ -141,11 +143,23 @@ public class GeneticHandler : MonoBehaviour
 
             for (int i = 0; i < winner1.Length; i++)
             {
-                if(i >= randomCrossPoint)
+                if (i >= randomCrossPoint)
                 {
                     int holder = winner1[i];
                     winner1[i] = winner2[i];
                     winner2[i] = holder;
+                }
+            }
+
+            if (Random.Range(0, 4) == 0)
+            {
+                if (Random.Range(0, 1) == 0)
+                {
+                    winner1 = Mutate(winner1);
+                }
+                else
+                {
+                    winner2 = Mutate(winner2);
                 }
             }
 
@@ -167,9 +181,48 @@ public class GeneticHandler : MonoBehaviour
 
 
         //Generate new swarmers based off of this data
-        for(int i = 0; i < newPop.Count; i++)
+        for (int i = 0; i < newPop.Count; i++)
         {
             population[i].MakeNewSwarmer(newPop[i]);
+        }
+    }
+
+    private int[] Mutate(int[] chromosome)
+    {
+        int index = Random.Range(0, 4);
+
+        //Columns - 0: SeekDist, 1: FleeDist, 2: WanderDist, 3: Grab Amount(capacity), 4: Speed, 5: Lifetime, 6: Amount Grabbed(total), 7: Fitness
+        //             0 - 100      0-50          0-30            0-5                       0-5
+
+        Debug.Log("Mutation!");
+
+        switch (index)
+        {
+            case 0:
+                chromosome[index] = Random.Range(0, 100);
+                break;
+            case 1:
+                chromosome[index] = Random.Range(0, 50);
+                break;
+            case 2:
+                chromosome[index] = Random.Range(0, 30);
+                break;
+            default:
+                chromosome[index] = Random.Range(0, 5);
+                break;
+
+        }
+
+        return chromosome;
+    }
+
+    private void ChromosomeToDebugPrint(int[] chr)
+    {
+        if (chr.Length == 8)
+        {
+            Debug.Log("{ Seek:" + chr[0] + ", Flee:" + chr[1] + ", Wander:" + chr[2] +
+                ", Capacity:" + chr[3] + ", Speed:" + chr[4] + ", Lifetime:" + chr[5] +
+                ", Grabbed:" + chr[6] + ", Fitness:" + chr[7] + " }");
         }
     }
 }
